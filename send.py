@@ -25,10 +25,10 @@ HOST = "9b7b323ee67e46d18f9317162c8e8841.s1.eu.hivemq.cloud"
 PORT = 8883
 MQTT_USER = "sergiu.doncila"
 MQTT_PASS = "QWEasd!@#123"
-TOPIC = "agrobot/data"
+TOPIC = "agrobot/pixhawk"
 
 # Connect to the Pixhawk
-vehicle = connect("/dev/ttyUSB0", baud=57600, wait_ready=True)
+vehicle = connect("/dev/ttyACM0", baud=57600, wait_ready=True)
 # setting callbacks for different events to see if it works, print the message etc.
 def on_connect(client, userdata, flags, rc, properties=None):
     print("CONNACK received with code %s." % rc)
@@ -69,11 +69,24 @@ client.subscribe("agrobot/#", qos=1)
 def publish_data():
     while True:
         data = {
-            "version": vehicle.version,
-            "location_global_frame": vehicle.location.global_frame,
-            "attitude": vehicle.attitude,
-            "velocity": vehicle.velocity,
-            "gps": vehicle.gps_0,
+            #"version": vehicle.version,
+            "location_global_frame_lat": vehicle.location.global_frame.lat,
+            "location_global_frame_long": vehicle.location.global_frame.lon,
+            "location_global_frame_alt": vehicle.location.global_frame.alt,
+            "attitude_pitch": vehicle.attitude.pitch,
+            "attitude_yaw": vehicle.attitude.yaw,
+            "attitude_roll": vehicle.attitude.roll,
+
+
+            "velocity_vx": vehicle.velocity[0],
+            "velocity_vy": vehicle.velocity[1],
+            "velocity_vz": vehicle.velocity[2],
+
+            "gps_eph": vehicle.gps_0.eph,
+            "gps_epv": vehicle.gps_0.epv,
+            "gps_fix_type": vehicle.gps_0.fix_type,
+            "gps_satellites_visible": vehicle.gps_0.satellites_visible,
+
             "groundspeed": vehicle.groundspeed,
         }
 
