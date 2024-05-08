@@ -21,10 +21,10 @@ from dronekit import connect, VehicleMode
 import json
 from paho import mqtt
 
-HOST = "9b7b323ee67e46d18f9317162c8e8841.s1.eu.hivemq.cloud"
+HOST = "placeholder" #### add host
 PORT = 8883
-MQTT_USER = "sergiu.doncila"
-MQTT_PASS = "QWEasd!@#123"
+MQTT_USER = "placeholder" #### add username
+MQTT_PASS = "placeholder" #### add pass
 TOPIC = "agrobot/pixhawk"
 
 # Connect to the Pixhawk
